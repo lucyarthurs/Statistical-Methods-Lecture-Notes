@@ -6,8 +6,8 @@ We will have practical interactive sessions. **Live coding in R!**
 # Running Jupyter notebooks on the cloud
 
 first steps to work with the notebooks in the cloud: Create and run a Microsoft Azure Notebooks! 
-https://luisa0-luisacutillo78.notebooks.azure.com/
-* Head to the website https://luisa0-luisacutillo78.notebooks.azure.com/ and click on sign-in (upper right corner). 
+https://notebooks.azure.com/luisacutillo78/libraries/Luisa0
+* Head to the website https://notebooks.azure.com/luisacutillo78/libraries/Luisa0 and click on sign-in (upper right corner). 
 * If you do not have an account, click on create an account, use your email address and set a password.
 * Make sure you are logged into your account.
 * Go to the Notebook in this website that you want to run in the cloud and clone it
