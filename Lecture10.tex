@@ -1,0 +1,296 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{pdfpages}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage[ruled]{algorithm2e}
+\usepackage{amsfonts}% or latexsym, amssymb, mathabx, txfonts, pxfonts, wasysym
+\usepackage{listings}
+
+\usetheme{Madrid}
+
+\newcommand*\oldmacro{}
+%\newcommand{\longsearrow}{\lower 1.4ex\hbox{\begin{picture}(18,18)(0,0)
+%\put(0,18){\vector(1,-1){18}}
+%\end{picture}}}
+\def\b1{{\mathbf 1}}
+\def\b0{{\mathbf 0}}
+\def\bb{{\mathbf b}}
+\def\bx{{\mathbf x}}
+\def\bw{{\mathbf w}}
+\def\be{{\mathbf e}}
+\def\bu{{\mathbf u}}
+\def\br{{\mathbf r}}
+\def\bc{{\mathbf c}}
+\def\bq{{\mathbf q}}
+\newcommand{\R}{{\mathcal R}}
+\newcommand{\C}{{\mathcal C}}
+\DeclareMathOperator{\rank}{rank}
+\newcommand{\M}{{\mathcal M}}
+\newcommand{\Range}{{\mathcal Range}}
+\DeclareMathOperator{\Span}{span}
+\newcommand{\Ref}[1]{\mbox{(\ref{#1})}}
+%\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+
+\let\oldmacro\insertshorttitle% save previous definition
+\renewcommand*\insertshorttitle{MATH2715 - Statistical Methods}
+\usebeamertemplate{mytheme}
+%\usepackage{pgf}  
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\grad}{\operatorname{grad}}
+
+\titlegraphic{
+   \includegraphics[width=4cm]{Leeds_logo.jpg}
+   }
+
+\title{MATH2715 - Statistical Methods}
+
+\author[L. Cutillo]{Luisa Cutillo}
+\institute[Univ. of Leeds] {School of Mathematics, University of Leeds \\ l.cutillo@leeds.ac.uk}
+%\vspace*{1cm}
+
+\date[]{\tiny 01/10/2018 }
+%\titlegraphic{\includegraphics[width=2cm,height=1cm]{Leeds_logo.jpg}}
+%\logo{\includegraphics[height=1cm]{Leeds_logo.jpg}}
+
+
+
+
+\begin{document}
+
+\begin{frame}
+\frametitle{ Statistical Methods MATH2715 info}
+\begin{alertblock}{Teaching material is all online!}
+\begin{itemize}
+\item On Minerva \url{http://minerva.leeds.ac.uk}
+\item On GitHub https://github.com/luisacutillo78/Statistical-Methods-Lecture-Notes
+\end{itemize}
+\end{alertblock}
+%\begin{alertblock}{R code submission}
+%\begin{itemize}
+%\item No technichal issue - please submit your SURNAMEstudentid.R [or .Rmd as required] file in the assignment folder.\
+%\item \textbf{Please print a copy of your notebook and put it into your marker collection box}.
+%\end{itemize}
+%\end{alertblock}
+
+\begin{alertblock}{Resources}
+\begin{itemize}
+\item Mathematical Statistics and Data Analysis - 3rd ed. (by J. A. Rice);
+\item http://www1.maths.leeds.ac.uk/statistics/R/Rintro.pdf;
+\item https://www.datacamp.com/courses/free-introduction-to-r.
+\end{itemize}
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Where We've Been, Where We're Going}
+
+\begin{alertblock}{In the previous Lecture}
+
+\begin{itemize}
+\item Random Samples from Normal Distributions
+\item Socrative Quiz
+\end{itemize}
+\end{alertblock}
+
+\begin{alertblock}{Today}
+\begin{itemize}
+\item Confidence intervals
+\item examples and exercises at the whiteboard
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Why do we need confidence intervals?}
+EXAMPLE
+\begin{itemize}
+\item Assume we are given a set of data from a normal distribution
+ \item we  wish to find a point estimate of the mean $\mu.$ 
+ \item We have seen that  $\overline{X}$ is an obvious candidate 
+ \end{itemize}
+ \begin{alertblock}{Questions}
+ We also need to know what is the likely error range.
+What If we had a different set of data?
+How reliable is our estimate, can we trust it? 
+To within what error
+bounds? 
+We need some theory, making use of the previous lectures!
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Confidence Intervals}
+\begin{alertblock}{Definition}
+A $100(1-\alpha)\%$ confidence interval for an unknown parameter $\theta$ is defined as the random interval
+\begin{eqnarray*}
+({\hat \theta}_1,{\hat \theta}_2),
+\end{eqnarray*}
+\par\noindent where ${\hat \theta}_1=g_1({\underline X})$ and ${\hat \theta}_2=g_2({\underline X})$ are statistics (random variables) such that
+\begin{eqnarray*}
+p({\hat \theta}_1 < \theta < {\hat \theta}_2) &=& 1-\alpha.
+\end{eqnarray*}
+\end{alertblock}
+
+\par\noindent{\bf Note 1:} CI are not unique, since there are infinitely many choices for these random variables.\\
+\par\noindent{\bf Note 2:} $\theta$ is the true parameter value, and is not random. ${\hat \theta}_1=g_1({\underline X})$ and ${\hat \theta}_2=g_2({\underline X})$ are random variables.\\
+\par\noindent{\bf Note 3:} Usual value $\alpha=0.05$; that is, $95\%$ confidence intervals.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Interpretation of a confidence interval}
+\par If we have a $95\%$ ({\it i.e.,} $\alpha=0.05$) confidence interval for a parameter $\theta$, the interpretation is:\\
+\vspace{0.25cm}
+\begin{quote}
+If we do many samplings, and for each observed random sample ${\underline x}$ we construct $(g_1({\underline x}),g_2({\underline x}))$, we should expect to have the true value $\theta$ within this interval $95\%$ of the times.
+\end{quote}
+\vspace{0.25cm}
+\par\noindent Usually statistics ${\hat \theta}_1$ and ${\hat \theta}_1$ are both obtained as a function of a point estimator ${\hat \theta}$ of $\theta$.
+\end{frame}
+
+\begin{frame}
+\frametitle{CI for $\mu$, $\sigma$ known, using Z}
+\begin{alertblock}{Recall} 
+A \textit{Z-statistic} is a statistic with a standard normal distribution.
+ The main use of $Z$-statistics stems from the facts that, for a
+general distribution, the Central Limit Theorem implies asymptotically that
+\[
+\frac{\sqrt{n}(\overline{X\text{ }}-\mu)}{\sigma}\sim N\left(  0,1\right)  ,
+\]
+and that the standard normal distribution involves \textbf{no unknown parameters}.
+\end{alertblock}
+\begin{alertblock}{Confidence interval for $\mu$ with $\sigma^{2}$ known}
+ We can use the $Z$-statistic to calculate a range of plausible values for $\mu$, under the assumption that
+$\sigma^{2}$ is known!
+\end{alertblock}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{CI for $\mu$, $\sigma$ known, using Z}
+Remembering that $Z\sim N(0,1),$ choose $z_{\alpha/2}$ such that
+\[%
+\begin{array}
+[c]{rl}%
+P\left(  Z\leq z_{\alpha/2}\right)  =1-\dfrac{\alpha}{2} \Longrightarrow P\left(  -z_{\alpha/2}\leq Z\leq z_{\alpha/2}\right) =1-\alpha.
+\end{array}
+\]
+If \ $Z=\dfrac{\sqrt{n}\left(  \overline{X\text{ }}-\mu\right)  }{\sigma}\;$as
+above, then
+\[%
+\begin{array}
+[c]{rl}%
+P\left(  -z_{\alpha/2}\leq\dfrac{\sqrt{n}\left(  \overline{X\text{ }}%
+-\mu\right)  }{\sigma}\leq z_{\alpha/2}\right)  & =1-\alpha\\
+\Longrightarrow\quad P\left(  \overline{X\text{ }}-\dfrac{\sigma}{\sqrt{n}%
+}\,z_{\alpha/2}\leq\mu\leq\overline{X\text{ }}+\dfrac{\sigma}{\sqrt{n}%
+}\,z_{\alpha/2}\right)  & =1-\alpha.
+\end{array}
+\]
+Hence the  $100\left(  1-\alpha\right)  \%$ confidence interval is%
+\[
+\left(  \overline{x}-\frac{\sigma}{\sqrt{n}}\,z_{\alpha/2}\;,\;\overline
+{x}+\frac{\sigma}{\sqrt{n}}\,z_{\alpha/2}\right)  .
+\]
+The most common value of $\alpha$ in use is 0.05, in which case $\,\,z_{\alpha
+/2}\,=z_{0.025}=1.960.$%
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{CI for $\mu$, $\sigma$ known, using Z}
+
+%BeginExpansion
+\begin{center}
+\includegraphics[
+height=1.5in,
+width=2.5in
+]%
+{Figures/a5norm_f3.eps}%
+\\
+\textbf{Figure 1}\quad95\% interval for $Z \sim N(0,1)$%
+\end{center}
+\par\noindent {\bf Note:} We could also go backwards, and try to compute the minimum $n$ in order to ensure that the width of the CI is lower than a maximum threshold.
+\par\noindent{\bf Whiteboard:} Examples 1 and 2
+
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{CI for $\mu$, $\sigma$ unknown, using t}
+
+We know that if $X_{1},\,X_{2\,},\ldots,\,X_{n}$ is iid $N(\mu,\sigma^{2})$, then
+\[
+T=\frac{\sqrt{n}\left(  \overline{X\text{ }}-\mu\right)  }{S}\sim t\left(
+n-1\right)
+\]
+We can now look for a confidence interval by replacing the $Z$-statistic with
+the $t$-statistic. \smallskip Writing\ $t_{\alpha/2}\left(  n-1\right)  $ for
+the $1-\frac{\alpha}{2}$ quantile from the distribution $t(n-1),$%
+\[
+P\left(  -t_{\alpha/2}\left(  n-1\right)  \le \frac{\sqrt{n}\left(
+\overline{X\text{ }}-\mu\right)  }{S} \le t_{\alpha/2}\left(  n-1\right)  \right)
+=1-\alpha.
+\]
+Re-arranging gives the random interval
+\[
+\left(  \overline{X\text{ }}-\frac{t_{\alpha/2}}{\sqrt{n}}\,S,\;\overline
+{X\text{ }}+\frac{t_{\alpha/2}}{\sqrt{n}}\,S\right)  ,
+\]
+and the $100\left(  1-\alpha\right)  \%$ confidence interval is the
+realisation of this interval.
+\end{frame}
+
+\begin{frame}
+\frametitle{$\sigma^2$ unknown}
+\par If $X_i\sim N(\mu,\sigma^2)$ with both $\mu$ and $\sigma^2$ unknown:\\
+\begin{itemize}
+\item $95\%$ CI for $\mu$: ${\bar X}\pm t_{0.025,n-1}\frac{S}{\sqrt{n}}$\\
+\begin{eqnarray*}
+ T\sim t_{n-1}: && p(T\le t_{0.025,n-1})=0.975
+\end{eqnarray*}
+
+\item $95\%$ CI for $\sigma^2$: $\left(\frac{(n-1)S^2}{\chi^2_{0.975,n-1}},\frac{(n-1)S^2}{\chi^2_{0.025,n-1}}\right)$\\
+\begin{eqnarray*}
+ Y\sim \chi^2_{n-1}: && p(Y\le \chi^2_{0.025,n-1})=0.975
+\end{eqnarray*}
+
+\end{itemize}
+\par\noindent{\bf Whiteboard:} Explain why, and Example 3.
+\end{frame}
+
+\begin{frame}
+\frametitle{Two Sample Problems}
+\par We consider two populations $N(\mu_1,\sigma_1^2)$ and $N(\mu_2,\sigma_2^2)$, with two independent random samples. Thus,
+\begin{eqnarray*}
+Var[{\bar X}_1-{\bar X}_2] &=& \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}.
+\end{eqnarray*}
+\par\noindent We are interested in inferring how $\mu_1$ and $\mu_2$ compare.\\
+\begin{itemize}
+\item{\bf Two Means:} Consider the two sample means ${\bar X}_1$ and ${\bar X_2}$:
+\begin{itemize}
+    \item{\bf If $\sigma_1^2$ and $\sigma_2^2$ known:} Then, a $100(1-\alpha)\%$ CI for $\mu_1-\mu_2$ is
+    \begin{equation*}
+    \left({\bar X}_1-{\bar X}_2\right)\pm z_{\frac{\alpha}{2}}\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}},\quad \hbox{where}\quad 
+p(Z\le z_{\frac{\alpha}{2}})=\left(1-\frac{\alpha}{2}\right).
+    \end{equation*}
+    \item{\bf If $\sigma_1^2=\sigma_2^2$ unknown:} Then, a $100(1-\alpha)\%$ CI for $\mu_1-\mu_2$ is
+    \begin{equation*}
+    \left({\bar X}_1-{\bar X}_2\right)\pm t_{\frac{\alpha}{2},n_1+n_2-2}S_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}},
+    \end{equation*}
+    \par\noindent where $S^2_p=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$ is the {\it Pooled Variance}.
+\end{itemize}
+\end{itemize}
+\par\noindent{\bf Whiteboard:} Example 4.
+\end{frame}
+
+\end{document}
